@@ -29,9 +29,14 @@ export class SignupComponent implements OnInit {
   }
 
   registerUser() {
-    this.authService.addUser(this.signupFormGroup.value);
+    const form = this.signupFormGroup.value;
+    if (form.password === form.passwordConfirmation) {
 
-    // take user to the login page
-    this.router.navigate(['/auth/login']);
+          // take user to the login page
+      this.authService.addUser(this.signupFormGroup.value);
+      this.router.navigate(['/auth/login']);
+    } else {
+      alert('The 2 Passwords do not match');
+    }
   }
 }
