@@ -1,15 +1,21 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-signup",
-  templateUrl: "./signup.component.html",
-  styleUrls: ["./signup.component.scss"]
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
   signupFormGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.signupFormGroup = this.formBuilder.group({
@@ -19,11 +25,13 @@ export class SignupComponent implements OnInit {
       phoneNumber: [''],
       password: ['', Validators.required],
       passwordConfirmation: ['', Validators.required],
-    })
+    });
   }
 
   registerUser() {
-    console.log('Form:::', this.signupFormGroup.value);
-    
+    this.authService.addUser(this.signupFormGroup.value);
+
+    // take user to the login page
+    this.router.navigate(['/auth/login']);
   }
 }

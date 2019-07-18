@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
   <div class="container">
-    <a class="navbar-brand" href="#">PWA - Angular 8</a>
+    <a class="navbar-brand" [routerLink]="['/']">PWA - Angular 8</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -16,15 +16,40 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto"></ul>
 
-      <a role="button" [routerLink]="['auth/login']" class="btn btn-light mr-3"
-        >Login</a
-      >
-      <a
-        role="button"
-        [routerLink]="['auth/signup']"
-        class="btn  btn-outline-light"
-        >Signup</a
-      >
+      <div *ngIf="!currentUser; else showProfile">
+        <a
+          role="button"
+          [routerLink]="['auth/login']"
+          class="btn btn-light mr-3"
+          >Login</a
+        >
+        <a
+          role="button"
+          [routerLink]="['auth/signup']"
+          class="btn  btn-outline-light"
+          >Signup</a
+        >
+      </div>
+
+      <ng-template #showProfile>
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-light dropdown-toggle"
+            data-toggle="dropdown"
+            data-display="static"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            {{ currentUser.firstName }} {{ currentUser.lastName }}
+          </button>
+          <div class="dropdown-menu dropdown-menu-lg-right">
+            <button class="btn-sm dropdown-item text-danger" type="button" (click)="logout()">
+              Logout
+            </button>
+          </div>
+        </div>
+      </ng-template>
     </div>
   </div>
 </nav>

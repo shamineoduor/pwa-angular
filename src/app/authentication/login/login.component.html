@@ -1,44 +1,50 @@
 <div class="row justify-content-center">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Login</h3>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Login</h5>
+      </div>
+
+      <div class="card-body">
+        <form novalidate (submit)="loginUser()" [formGroup]="loginFormGroup">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="emailAddress">Email Address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="emailAddress"
+                  formControlName="emailAddress"
+                />
+              </div>
             </div>
-
-            <div class="card-body">
-                <form novalidate (submit)="loginUser()"
-                    [formGroup]="loginFormGroup">
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="emailAddress">Email Address</label>
-                                <input type="email" class="form-control"
-                                    id="emailAddress"
-                                    formControlName="emailAddress">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control"
-                                    id="password"
-                                    formControlName="password">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group text-right">
-
-                        <button type="submit" class="btn btn-primary"
-                            [disabled]="loginFormGroup.invalid">Login</button>
-                    </div>
-                </form>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  formControlName="password"
+                />
+              </div>
             </div>
+          </div>
 
-            <div class="card-footer">
+          <div class="form-group text-right">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="loginFormGroup.invalid"
+            >
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
 
-            </div>
-        </div>
+      <div class="card-footer"></div>
     </div>
+  </div>
 </div>
