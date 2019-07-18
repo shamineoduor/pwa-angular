@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Item } from '../../models/item';
+import { ItemService } from '../../services/item.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-item-list',
@@ -7,15 +11,31 @@ import { Item } from '../../models/item';
   styleUrls: ['./item-list.component.scss'],
 })
 export class ItemListComponent implements OnInit {
-  items: Item[] = [
-    { name: 'Organic GMO Seeds', expenseAmount: 1000 },
-    { name: 'Labour', expenseAmount: 2000 },
-    { name: 'Repairs and Maintenance', expenseAmount: 400 },
-  ];
+  selectedIndex: number;
+  selectedItem: Item;
 
-  constructor() {}
+  constructor(public itemService: ItemService) {}
 
   ngOnInit() {}
 
-  editItem(item: Item) {}
+  showEditModal(index: number, item: Item) {
+    this.selectedIndex = index;
+    this.selectedItem = item;
+
+    console.log(index, item);
+
+    // show the modal
+    $('#editExpenseModal').modal('show');
+  }
+
+  editExpense(obj: { index: number; item: Item }) {
+    this.itemService.update(obj.index, obj.item);
+
+    // close the modal
+    $('#editExpenseModal').modal('hide');
+  }
+
+  delete(index: number) {
+    this.itemService.delete(index);
+  }
 }

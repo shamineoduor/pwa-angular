@@ -1,4 +1,4 @@
-<form [formGroup]="itemFormGroup" novalidate (submit)="addExpense()">
+<div [formGroup]="itemFormGroup" novalidate>
   <div class="form-group">
     <label for="itemName">Item Name</label>
     <input
@@ -31,6 +31,13 @@
   </div>
 
   <div class="form-group text-right">
-    <button type="submit" class="btn btn-success">Save</button>
+    <button
+      type="button"
+      class="btn btn-success"
+      [disabled]="itemFormGroup.invalid"
+      (click)="onSubmit()"
+    >
+      Save
+    </button>
   </div>
-</form>
+</div>
