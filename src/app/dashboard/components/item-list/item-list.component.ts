@@ -4,22 +4,18 @@ import { Item } from '../../models/item';
 @Component({
   selector: 'app-item-list',
   templateUrl: './item-list.component.html',
-  styleUrls: ['./item-list.component.scss']
+  styleUrls: ['./item-list.component.scss'],
 })
 export class ItemListComponent implements OnInit {
   items: Item[] = [
-    {name: 'Organic GMO Seeds', expenseAmount: 1000},
-    {name: 'Labour', expenseAmount: 2000},
-    {name: 'Repairs and Maintenance', expenseAmount: 400},
-  ]
+    { name: 'Organic GMO Seeds', expenseAmount: 1000 },
+    { name: 'Labour', expenseAmount: 2000 },
+    { name: 'Repairs and Maintenance', expenseAmount: 400 },
+  ];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  editItem(item: Item) {
-    
-  }
-
+  editItem(item: Item) {}
 }
