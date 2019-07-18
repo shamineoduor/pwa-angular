@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <div class="container">
         <a class="navbar-brand" href="#">PWA - Angular 8</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -13,9 +13,13 @@
                
             </ul>
             
-            <a role="button" href="" class="btn btn-info mr-3">Login</a>
-            <a role="button" href="" class="btn  btn-outline-primary">Signup</a>
+            <a role="button" [routerLink]="['auth/login']" class="btn btn-info mr-3">Login</a>
+            <a role="button" [routerLink]="['auth/signup']" class="btn  btn-outline-primary">Signup</a>
             
         </div>
     </div>
 </nav>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
