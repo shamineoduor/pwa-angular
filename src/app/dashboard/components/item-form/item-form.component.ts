@@ -15,7 +15,7 @@ export class ItemFormComponent implements OnInit {
     this.itemFormGroup = this.formBuilder.group({
       name: ['', Validators.required],
       description: [''],
-      expenseAmmount: ['', [Validators.required, Validators.min(0.0)]],
+      expenseAmount: ['', [Validators.required, Validators.min(0.0)]],
     });
   }
 
