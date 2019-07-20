@@ -29,6 +29,8 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/']);
 
       this.loginFormGroup.reset();
+    } else {
+      alert ("incorrect login credentials");
     }
   }
 }
