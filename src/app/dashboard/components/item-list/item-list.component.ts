@@ -22,8 +22,6 @@ export class ItemListComponent implements OnInit {
     this.selectedIndex = index;
     this.selectedItem = item;
 
-    console.log(index, item);
-
     // show the modal
     $('#editExpenseModal').modal('show');
   }

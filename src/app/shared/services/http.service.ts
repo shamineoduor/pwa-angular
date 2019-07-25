@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/authentication/services/auth.service';
 import { User } from 'src/app/authentication/models/user';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,12 @@ export class HttpService {
       }
     }
 
-    return this.httpClient.request(method, url, { body, headers });
+    return this.httpClient.request(method, url, { body, headers }).pipe(
+      catchError(err => {
+        console.log('Error:::', err);
+
+        throw new Error(err);
+      }),
+    );
   }
 }

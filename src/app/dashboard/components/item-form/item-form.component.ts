@@ -43,8 +43,10 @@ export class ItemFormComponent implements OnInit, OnChanges {
 
   private initForm() {
     this.itemFormGroup = this.formBuilder.group({
+      id: [(this.item && this.item.id) || ''],
       name: [(this.item && this.item.name) || '', Validators.required],
       description: [(this.item && this.item.description) || ''],
+      userId: [(this.item && this.item.userId) || ''],
       expenseAmount: [
         (this.item && this.item.expenseAmount) || '',
         [Validators.required, Validators.min(0.0)],
