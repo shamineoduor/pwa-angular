@@ -21,7 +21,7 @@ export class SignupComponent implements OnInit {
     this.signupFormGroup = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      emailAddress: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       phoneNumber: [''],
       password: ['', Validators.required],
       passwordConfirmation: ['', Validators.required],
@@ -30,11 +30,12 @@ export class SignupComponent implements OnInit {
 
   registerUser() {
     const form = this.signupFormGroup.value;
-    if (form.password === form.passwordConfirmation) {
 
-          // take user to the login page
-      this.authService.addUser(this.signupFormGroup.value);
-      this.router.navigate(['/auth/login']);
+    if (form.password === form.passwordConfirmation) {
+      this.authService.addUser(form).subscribe(_ => {
+        // take user to the login page
+        this.router.navigate(['/auth/login']);
+      });
     } else {
       alert('The 2 Passwords do not match');
     }

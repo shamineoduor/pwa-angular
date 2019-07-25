@@ -1,5 +1,9 @@
 export interface Item {
-    name: string;
-    description?: string;
-    expenseAmount: number;
+  id?: number;
+  name: string;
+  expenseAmount: number;
+  userId: number;
+  description?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

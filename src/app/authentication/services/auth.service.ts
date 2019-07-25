@@ -3,18 +3,19 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { User } from '../models/user';
+import { HttpService } from 'src/app/shared/services/http.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  REGISTRATION_ENDPOINT = 'users';
+  LOGIN_ENDPOINT = 'authentication';
+
   userSubject = new Subject<User>();
 
-  users: User[] = [];
-
-  private persist() {
-    localStorage.setItem('users', JSON.stringify(this.users));
-  }
+  constructor(private http: HttpService) {}
 
   isAuthenticated() {
     const currentUser = localStorage.getItem('currentUser');
@@ -23,16 +24,16 @@ export class AuthService {
   }
 
   addUser(user: User) {
-    this.users = [user, ...this.users];
-
-    this.persist();
+    return this.http
+      .makeRequest('POST', this.REGISTRATION_ENDPOINT, false, user)
+      .pipe(map((newUser: User) => newUser));
   }
 
-  getCurrentUser(): User {
+  getCurrentUser(): { accessToken: string; user: User } {
     let user: any = localStorage.getItem('currentUser');
 
     if (!!user) {
-      user = JSON.parse(user) as User;
+      user = JSON.parse(user);
     } else {
       user = null;
     }
@@ -40,29 +41,24 @@ export class AuthService {
     return user;
   }
 
-  getUsers() {
-    const users = localStorage.getItem('users');
-
-    if (users) {
-      this.users = JSON.parse(users);
-    }
-  }
-
   login(creds: { emailAddress: string; password: string }) {
-    const currentUser = this.users.find(
-      user =>
-        user.emailAddress.toLowerCase() === creds.emailAddress.toLowerCase() &&
-        user.password === creds.password,
-    );
+    return this.http
+      .makeRequest('POST', this.LOGIN_ENDPOINT, false, {
+        ...creds,
+        strategy: 'local',
+      } as any)
+      .pipe(
+        map((response: { accessToken: string; user: User }) => {
+          if (response) {
+            localStorage.setItem('currentUser', JSON.stringify(response));
 
-    if (currentUser) {
-      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            this.userSubject.next(response.user);
+            return true;
+          }
 
-      this.userSubject.next(currentUser);
-      return true;
-    }
-
-    return false;
+          return false;
+        }),
+      );
   }
 
   logout() {
