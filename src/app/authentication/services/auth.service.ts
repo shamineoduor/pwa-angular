@@ -28,11 +28,11 @@ export class AuthService {
     this.persist();
   }
 
-  getCurrentUser(): User {
+  getCurrentUser(): { accessToken: string; user: User } {
     let user: any = localStorage.getItem('currentUser');
 
     if (!!user) {
-      user = JSON.parse(user) as User;
+      user = JSON.parse(user);
     } else {
       user = null;
     }
@@ -51,7 +51,7 @@ export class AuthService {
   login(creds: { emailAddress: string; password: string }) {
     const currentUser = this.users.find(
       user =>
-        user.emailAddress.toLowerCase() === creds.emailAddress.toLowerCase() &&
+        user.email.toLowerCase() === creds.emailAddress.toLowerCase() &&
         user.password === creds.password,
     );
 
