@@ -6,17 +6,15 @@ import { AuthService } from 'src/app/authentication/services/auth.service';
   providedIn: 'root',
 })
 export class HttpService {
+  BASE_URL = 'http://localhost:3030/';
+
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
   ) {}
 
-  makeRequest(
-    method: string,
-    url: string,
-    body = null,
-    isAuthenticated = true,
-  ) {
+  makeRequest(method: string, url: string, isAuthenticated = true, body?: any) {
+    url = `${this.BASE_URL}${url}`;
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
