@@ -19,16 +19,20 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginFormGroup = this.formBuilder.group({
-      emailAddress: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
   }
 
   loginUser() {
-    if (this.authService.login({ ...this.loginFormGroup.value })) {
-      this.router.navigate(['/']);
+    this.authService
+      .login({ ...this.loginFormGroup.value })
+      .subscribe(isLoggedIn => {
+        if (isLoggedIn) {
+          this.router.navigate(['/']);
 
-      this.loginFormGroup.reset();
-    }
+          this.loginFormGroup.reset();
+        }
+      });
   }
 }

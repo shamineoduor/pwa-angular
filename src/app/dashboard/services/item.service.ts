@@ -17,7 +17,7 @@ export class ItemService {
 
   getItems(): Observable<Item[]> {
     return this.http.makeRequest('GET', this.ENDPOINT).pipe(
-      map((items: Item[]) => items),
+      map((resp: any) => resp.data as Item[]),
       tap(items => {
         this.items = items;
       }),

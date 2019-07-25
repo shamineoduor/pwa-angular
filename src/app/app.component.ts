@@ -14,14 +14,16 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.authService.getUsers();
-
     this.authService.userSubject.subscribe(user => {
       this.currentUser = user;
     });
 
     if (!this.currentUser) {
-      this.currentUser = this.authService.getCurrentUser();
+      const loggedInUser = this.authService.getCurrentUser();
+
+      if (loggedInUser) {
+        this.currentUser = loggedInUser.user;
+      }
     }
   }
 

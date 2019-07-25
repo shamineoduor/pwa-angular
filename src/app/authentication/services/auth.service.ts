@@ -13,7 +13,7 @@ export class AuthService {
   REGISTRATION_ENDPOINT = 'users';
   LOGIN_ENDPOINT = 'authentication';
 
-  userSubject = new Subject<{ accessToken: string; user: User }>();
+  userSubject = new Subject<User>();
 
   constructor(private http: HttpService) {}
 
@@ -52,7 +52,7 @@ export class AuthService {
           if (response) {
             localStorage.setItem('currentUser', JSON.stringify(response));
 
-            this.userSubject.next(response);
+            this.userSubject.next(response.user);
             return true;
           }
 
